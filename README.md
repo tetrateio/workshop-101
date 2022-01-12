@@ -13,4 +13,4 @@ TODO... this is a WIP and only copy+paste
 - Application Troubleshooting & Observability
 
 ## Preparing Workshop environment
-todo...
+todo... link to how to setup
