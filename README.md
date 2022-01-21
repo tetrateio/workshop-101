@@ -3,8 +3,8 @@ This workshop provides Platform Operators, Application Developers, and Applicati
 
 The target state infrastucture architecture is comprised of 4 Kubernetes clusters:
 
-- 2 clusters are deployed in one cloud; each residing in a different region.  One of these clusters will have a VM onboarded into the mesh.
-- 1 cluster is deployed in a different; residing in a single region.
+- 2 clusters are deployed into one cloud -- `Cloud A`.  Each cluster resides in a different region.  One of these clusters will have a VM onboarded into the mesh.
+- 1 cluster is deployed in a different cloud -- `Cloud B`
 - 1 cluster is deployed to a public cloud and services a Tier 1 Gateway, service as a global load balancer across all clusters and clouds.
 
 ![Base Diagram](docs/arch.png)
