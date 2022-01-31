@@ -1,0 +1,27 @@
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  name: workshop-app
+spec:
+  description: Demo App
+  displayName: Demo App
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-workshop-app"
+      - "*/$PREFIX-tier1"
+---
+apiversion: api.tsb.tetrate.io/v2
+kind: Workspace
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  name: marketdata
+spec:
+  description: Market Data Services
+  displayName: Market Data Services
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-quotes"

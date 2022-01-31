@@ -3,8 +3,8 @@ This workshop provides Platform Operators, Application Developers, and Applicati
 
 The target state infrastucture architecture is comprised of 4 Kubernetes clusters:
 
-- 2 clusters are deployed in one cloud; each residing in a different region.  One of these clusters will have a VM onboarded into the mesh.
-- 1 cluster is deployed in a different; residing in a single region.
+- 2 clusters are deployed into one cloud -- `Cloud A`.  Each cluster resides in a different region.  One of these clusters will have a VM onboarded into the mesh.
+- 1 cluster is deployed in a different cloud -- `Cloud B`
 - 1 cluster is deployed to a public cloud and services a Tier 1 Gateway, service as a global load balancer across all clusters and clouds.
 
 ![Base Diagram](docs/arch.png)
@@ -13,8 +13,8 @@ The target state infrastucture architecture is comprised of 4 Kubernetes cluster
 1. Tetrate Introduction [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Environment Access](xxxx/README.md) -- TODO
 2. Multi-tenancy [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
-    1. [Lab - Multi-tenancy](xxxx/README.md) -- TODO
-    2. [Lab - Application Deploy](xxxx/README.md) -- TODO
+    1. [Lab - Multi-tenancy](01-multi-tenancy/README.md)
+    2. [Lab - Application Deploy](02-app-deploy/README.md) -- TODO
 3. Application Config & Traffic Mgmt [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Multi-region, Multi-cloud Application Ingress](xxxx/README.md) -- TODO
     2. [Lab - Application Failover](xxxx/README.md) -- TODO
