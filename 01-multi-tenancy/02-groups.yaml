@@ -1,0 +1,75 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: marketdata
+  name: marketdata-gw
+spec:
+  displayName: Market Data Gateway
+  description: Market Data Gateway
+  namespaceSelector:
+    names:
+      - "*/*"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: workshop-app
+  name: tier1-gw
+spec:
+  displayName: Tier 1 Gateway
+  description: Tier 1 Gateway
+  namespaceSelector:
+    names:
+      - "*/$PREFIX-tier1"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: workshop-app
+  name: frontend-gw-01
+spec:
+  displayName: Frontend Gateway 01
+  description: Frontend Gateway 01
+  namespaceSelector:
+    names:
+      - "gke-east/$PREFIX-workshop-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: workshop-app
+  name: frontend-gw-02
+spec:
+  displayName: Frontend Gateway 02
+  description: Frontend Gateway 02
+  namespaceSelector:
+    names:
+      - "gke-west/$PREFIX-workshop-app"
+  configMode: BRIDGED
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Group
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: workshop-app
+  name: frontend-gw-03
+spec:
+  displayName: Frontend Gateway 03
+  description: Frontend Gateway 03
+  namespaceSelector:
+    names:
+      - "aws-east/$PREFIX-workshop-app"
+  configMode: BRIDGED
