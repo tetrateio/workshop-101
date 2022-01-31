@@ -13,8 +13,8 @@ The target state infrastucture architecture is comprised of 4 Kubernetes cluster
 1. Tetrate Introduction [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Environment Access](xxxx/README.md) -- TODO
 2. Multi-tenancy [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
-    1. [Lab - Multi-tenancy](01-multi-tenancy/README.md) -- TODO
-    2. [Lab - Application Deploy](xxxx/README.md) -- TODO
+    1. [Lab - Multi-tenancy](01-multi-tenancy/README.md)
+    2. [Lab - Application Deploy](02-app-deploy/README.md) -- TODO
 3. Application Config & Traffic Mgmt [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Multi-region, Multi-cloud Application Ingress](xxxx/README.md) -- TODO
     2. [Lab - Application Failover](xxxx/README.md) -- TODO
