@@ -33,7 +33,7 @@ A simple frontend and backend application that allows simple testing of mesh net
 ![Base Diagram](docs/02-app.png)
 
 ### Market Data App
-A simple application that retrieves market data.  This application is deployed to a VM in order to deomstrate VM onboarding and hybrid security models. 
+A simple application that retrieves market data.  This application is deployed to a VM in order to demonstrate VM onboarding and hybrid security models. 
 
 ![Base Diagram](docs/quotes.png)
 

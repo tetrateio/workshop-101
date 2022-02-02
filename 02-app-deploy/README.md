@@ -3,7 +3,7 @@ Now we need to all our sample applications. As a reminder, we'll be working with
 1. Demo App
 2. Market Data App
 
-The steps to deploy the applications are largely identical; the main change will be ensuring that you are targeting the correct kubernetes cluster in your kube context file.
+The steps to deploy the applications are largely identical; the main change will be ensuring that you are targeting the correct kubernetes cluster in your kube context file.  However, since we will be demonstrating workload migration from a VM to kubernetes with mesh, we won't deploy our Market Data app quite yet.
 
 ## Application Deployment
 Prior to installing ensure you have set an environment variable in the shell you are using named `PREFIX`.  This value should already be configured on your workshop jumpbox assigned to you.  This will be used to prefix common objects, such as namespaces, dns entries, TSB tenants and workspaces, etc such that your appliations and configuration will not collide with others running this workshop on shared infrastructure.
@@ -77,27 +77,6 @@ Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  Enter `backend
 ![Base Diagram](../docs/02-app.png)
 
 You may now choose to close the port forward in the shell by pressing Ctrl-C .
-
-### Market Data Application
-The Market Data application is also going to be deployed to the `cloud-a-01` kubernetes clusters.
-
-1 - Deploy the application the appliction and Istio IngressGateway using `kubectl`.
-
-```bash
-envsubst < 02-app-deploy/cloud-a-01/app-marketdata.yaml | kubectl --context cloud-a-01 apply -f -
-```
-
-If you inspect the deployment file `02-app-deploy/cloud-a-01/app-marketdata.yaml` you'll note that this created an application namespace, deployed the microservice application, and also created an Istio IngressGateway.  
-
-Since we have not made any mesh configurations we cannot consume our service externally.  However, we can use the frontend of the demo app we previously deployed to test the market data service.  Execute the same command as before to port-forward:
-
-```bash
-kubectl --context cloud-a-01 port-forward -n $PREFIX-workshop-app $(kubectl --context cloud-a-01 get po -n $PREFIX-workshop-app --output=jsonpath={.items..metadata.name} -l app=frontend)  --address 0.0.0.0 8888:8888 
-```
-
-Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  This time enter `quotes-service.<PREFIX-quotes:8080/v1/quotes?q=GOOG` in the Backend HTTP URL text box and submit the request.  Replace `<PREFIX>` with the value you have been using during this workshop for your env prefix.  This will cause the frontend microservice to call to the market data microservice over the service mesh and return the stock quote data as JSON.
-
-![Base Diagram](../docs/02-quote.png)
 
 ### Tier 1 Gateway Deployment
 Lastly, in preparation for load balancing our application across clouds and cloud-provider regions, we will deploy a Tier 1 gateway.
