@@ -1,10 +1,10 @@
 # Overview
 this is a placeholder.... TODO
 
-kubeaccess
+access to TSB
 
 tctl access
 
-access to TSB
+kubeaccess
 
 explain prefix in jumphost
