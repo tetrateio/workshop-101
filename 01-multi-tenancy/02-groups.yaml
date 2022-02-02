@@ -41,7 +41,7 @@ spec:
   description: Frontend Gateway 01
   namespaceSelector:
     names:
-      - "gke-east/$PREFIX-workshop-app"
+      - "azure-tetrate-workshop-2/$PREFIX-workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -56,7 +56,7 @@ spec:
   description: Frontend Gateway 02
   namespaceSelector:
     names:
-      - "gke-west/$PREFIX-workshop-app"
+      - "azure-tetrate-workshop-1/$PREFIX-workshop-app"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -71,5 +71,5 @@ spec:
   description: Frontend Gateway 03
   namespaceSelector:
     names:
-      - "aws-east/$PREFIX-workshop-app"
+      - "azure-tetrate-workshop-3/$PREFIX-workshop-app"
   configMode: BRIDGED

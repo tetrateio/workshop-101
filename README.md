@@ -14,7 +14,7 @@ The target state infrastucture architecture is comprised of 4 Kubernetes cluster
     1. [Lab - Environment Access](xxxx/README.md) -- TODO
 2. Multi-tenancy [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Multi-tenancy](01-multi-tenancy/README.md)
-    2. [Lab - Application Deploy](02-app-deploy/README.md) -- TODO
+    2. [Lab - Application Deploy](02-app-deploy/README.md)
 3. Application Config & Traffic Mgmt [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Multi-region, Multi-cloud Application Ingress](xxxx/README.md) -- TODO
     2. [Lab - Application Failover](xxxx/README.md) -- TODO
@@ -30,10 +30,10 @@ During this workshop we will be modeling 2 different applications that allow for
 ### Demo App
 A simple frontend and backend application that allows simple testing of mesh networking and security.  This application spans all clouds and clusters, which will allow us to test intelligent routing and failover
 
-![Base Diagram](docs/demo-app.png)
+![Base Diagram](docs/02-app.png)
 
 ### Market Data App
-A simple application that retrieves market data.  This application is deployed to a VM in order to deomstrate VM onboarding and hybrid security models. 
+A simple application that retrieves market data.  This application is deployed to a VM in order to demonstrate VM onboarding and hybrid security models. 
 
 ![Base Diagram](docs/quotes.png)
 
