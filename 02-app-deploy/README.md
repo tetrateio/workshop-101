@@ -97,12 +97,12 @@ kubectl --context cloud-a-01 port-forward -n $PREFIX-workshop-app $(kubectl --co
 
 Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8888`.  This time enter `quotes-service.<PREFIX-quotes:8080/v1/quotes?q=GOOG` in the Backend HTTP URL text box and submit the request.  Replace `<PREFIX>` with the value you have been using during this workshop for your env prefix.  This will cause the frontend microservice to call to the market data microservice over the service mesh and return the stock quote data as JSON.
 
-![Base Diagram](../images/02-quote.png)
+![Base Diagram](../docs/02-quote.png)
 
 ### Tier 1 Gateway Deployment
 Lastly, in preparation for load balancing our application across clouds and cloud-provider regions, we will deploy a Tier 1 gateway.
 
-![Base Diagram](../images/arch.png)
+![Base Diagram](../docs/arch.png)
 
 1 - Deploy the Istio IngressGateway using `kubectl` to the Tier1 cluster:
 
