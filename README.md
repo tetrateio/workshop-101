@@ -30,7 +30,7 @@ During this workshop we will be modeling 2 different applications that allow for
 ### Demo App
 A simple frontend and backend application that allows simple testing of mesh networking and security.  This application spans all clouds and clusters, which will allow us to test intelligent routing and failover
 
-![Base Diagram](docs/demo-app.png)
+![Base Diagram](docs/02-app.png)
 
 ### Market Data App
 A simple application that retrieves market data.  This application is deployed to a VM in order to deomstrate VM onboarding and hybrid security models. 
