@@ -1,0 +1,21 @@
+apiVersion: api.tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: default-settings
+  name: default-settings
+  organization: tetrate-workshop
+  tenant: $PREFIX-workshop
+  workspace: workshop-app
+spec:
+  defaultTrafficSetting:
+    resilience:
+      httpRequestTimeout: "1s"
+      httpRetries:
+        attempts: 3
+        perTryTimeout: "1s"
+        retryOn: 5xx
+      circuitBreakerSensitivity: HIGH
+  regionalFailover:
+  - from: eastus2    
+    to: westus2
+  displayName: default-settings
