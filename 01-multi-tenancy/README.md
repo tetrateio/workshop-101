@@ -6,7 +6,7 @@ The first thing that is needed prior to working deploying and introduce applicat
 During this lab we will utilizing the `tctl` CLI to interact with the TSB Management Plane.  As we ensured with our previous lab, you will need to ensure that your `tctl` CLI is targeted and logged into the TSB management plane.  A simple test is retrieving the tenants we have access to:
 
 ```bash
-tctl get tenant
+tctl get tenant $PREFIX-workshop
 ```
 
 If you are not logged in please return to the environment access and complete the TCTL CLI login section prior to continuing.
@@ -16,7 +16,7 @@ Since a `Tenant` is at the top of the multi-tenancy hierarchy this object has al
 
 1. Once again execute the `tctl` CLI command to retrieve your tenant details.  This time will instruct the command to output the object in YAML form.  This API Object is about as simple as it gets; the `organization` and `name` fields are the most relevant as these uniquely identify your tenant within the system.
 ```bash
-tctl get tenant -o yaml
+tctl get tenant $PREFIX-workshop -o yaml
 ```
 ```yaml
 ---
@@ -37,7 +37,7 @@ spec:
 
 2. You'll also note that there is a second API Object which configures some basic RBAC on the tenant.  Your workshop user has been configured to be an admin of this tenant.  In practice, this binding provides the opportunity to map an organizations user and groups to roles, groups, and mutli-tenancy objects within TSB.
 ```bash
-tctl get tenantaccessbindings -o yaml
+tctl get tenantaccessbindings --tenant $PREFIX-workshop -o yaml
 ```
 ```yaml
 ---
@@ -75,13 +75,14 @@ kind: Workspace
 metadata:
   tenant: $PREFIX-workshop
   organization: tetrate-workshop
-  name: demo-app
+  name: workshop-app
 spec:
   description: Demo App
   displayName: Demo App
   namespaceSelector:
     names:
-      - "*/$PREFIX-demo-app"
+      - "*/$PREFIX-workshop-app"
+      - "*/$PREFIX-tier1"
 ```
 
 ## Create Workspace Groups
