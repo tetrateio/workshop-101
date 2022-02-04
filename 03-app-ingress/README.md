@@ -9,7 +9,7 @@ As we ensured with our previous labs, prior to continuing ensure you have an env
 echo Workshop Prefix: $PREFIX
 
 # This should return your current TSB Tenant
-tctl get tenant
+tctl get tenant $PREFIX-workshop
 ```
 
 We will be creating nearly identical configurations in all 3 of our application Kubernetes clusters.  Using the `tctl apply` command create a Tetrate `IngressGateway` for each cluster.  Under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply commands and then we'll inspect the configuration a bit further
@@ -82,7 +82,7 @@ Open your browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.c
 
 Then click the Topology tab in the top center portion of the UI.  This will display the topology of all microservices and the communciation flows between the service, even across clusters.
 
-![Base Diagram](../images/03-topo.png)
+![Base Diagram](../docs/03-topo.png)
 
 ## Deploying a Tier 1 Edge Load Balancer
 Now that we have deployed and configured our applications in all 3 clsuters we can setup a `Tier 1 Gateway`, which is an Ingress Gateway that understands the multi-cluster topology of an application and is able to load balance across instances of the application regardless of what cloud, region, or cluster they are running in.  During this last setup we will target a new cluster, which has the solve purpose of hosting Tier 1 Gateways.  
