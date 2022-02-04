@@ -47,7 +47,7 @@ Wait a few seconds for the pods to completely terminate.  Go back to the browser
 
 ![Base Diagram](../docs/04-app-failover.png)
 
-- Let's see how this has changed our topology view.  Goimng back to the TSB UI, refresh the browser that has the TSB application open.  You'll now see a line representing traffic flowing from the frontend within the cloud A 01 cluster to the gateway, and subsequently the backend service, in the cloud A 02 cluster.  
+- Let's see how this has changed our topology view.  Going back to the TSB UI, refresh the browser that has the TSB application open.  You'll now see a line representing traffic flowing from the frontend within the cloud A 01 cluster to the gateway, and subsequently the backend service, in the cloud A 02 cluster.  
 
 ![Base Diagram](../docs/04-topology-failover.png)
 
