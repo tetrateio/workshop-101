@@ -1,0 +1,21 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: Tier1Gateway
+metadata:
+  name: tier1-gateway
+  group: tier1-gw
+  workspace: workshop-app
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+spec:
+  workloadSelector:
+    namespace: $PREFIX-tier1
+    labels:
+      app: $PREFIX-tier1-gateway
+  externalServers:
+  - hostname: demo-app.$PREFIX.workshop.cx.tetrate.info
+    name: demo-app
+    port: 443
+    tls:
+      mode: SIMPLE
+      secretName: frontend-certs

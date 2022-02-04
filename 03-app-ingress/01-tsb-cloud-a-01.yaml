@@ -1,0 +1,45 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: app-gateway
+  group: frontend-gw-01
+  workspace: workshop-app
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+spec:
+  workloadSelector:
+    namespace: $PREFIX-workshop-app
+    labels:
+      app: $PREFIX-tsb-gateway
+  http:
+    - name: frontend-gateway
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-workshop-app/frontend.$PREFIX-workshop-app.svc.cluster.local"
+              port: 8888
+    - name: frontend-internal
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: frontend-certs
+      hostname: demo-app.$PREFIX.workshop.cx.tetrate.info
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-workshop-app/frontend.$PREFIX-workshop-app.svc.cluster.local"
+              port: 8888
+    - name: backend-internal
+      port: 80
+      hostname: backend.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-workshop-app/backend.$PREFIX-workshop-app.svc.cluster.local"
+              port: 80
