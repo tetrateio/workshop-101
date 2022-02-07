@@ -1,0 +1,60 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: WorkloadGroup
+metadata:
+  name: quotes
+  namespace: $PREFIX-quotes
+  labels:
+    app: quotes
+    version: v1
+    class: vm
+spec:
+  template:
+    labels:
+      app: quotes
+      version: v1
+      class: vm
+    serviceAccount: quotes-vm
+    network: external
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: quotes-sidecar
+  namespace: $PREFIX-quotes
+spec:
+  workloadSelector:
+    labels:
+      app: quotes
+      class: vm
+      version: v1
+  ingress:
+  - defaultEndpoint: 127.0.0.1:8081
+    port:
+      name: http
+      number: 8080
+      protocol: HTTP
+  egress:
+    - bind: 127.0.0.2
+      hosts:
+        - "./*"
+        - xcp-multicluster/*
+---
+apiVersion: authorization.onboarding.tetrate.io/v1alpha1
+kind: OnboardingPolicy
+metadata:
+  name: allow-workshop-vms
+  namespace: $PREFIX-quotes
+spec:
+  allow:
+  - workloads:
+    - aws:
+        accounts:
+        - '192760260411'
+        ec2:
+          iamRoleNames:
+          - workshop-role
+    onboardTo:
+    - workloadGroupSelector:
+        matchLabels:
+          app: quotes  
