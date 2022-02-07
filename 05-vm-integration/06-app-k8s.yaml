@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes
+  namespace: $PREFIX-quotes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quotes
+      version: v2
+  template:
+    metadata:
+      name: quotes
+      labels:
+        app: quotes
+        version: v2
+    spec:
+      containers:
+        - image: gcr.io/abz-perm/quotes:v1
+          name: quotes-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
