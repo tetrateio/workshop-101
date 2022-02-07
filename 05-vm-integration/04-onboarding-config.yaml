@@ -1,0 +1,18 @@
+---
+apiVersion: config.agent.onboarding.tetrate.io/v1alpha1
+kind: OnboardingConfiguration
+onboardingEndpoint:
+  host: onboarding.cloud-a-02.workshop.cx.tetrate.info
+  transportSecurity:
+    tls:
+      sni: onboarding.cloud-a-02.workshop.cx.tetrate.info
+workloadGroup:
+  namespace: $PREFIX-quotes
+  name: quotes
+settings:
+  connectedOver: INTERNET
+workload:
+  labels:
+    app: quotes
+    version: v1
+    class: vm

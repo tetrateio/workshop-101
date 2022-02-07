@@ -1,0 +1,23 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: IngressGateway
+metadata:
+  name: quotes-gateway
+  group: marketdata-gw
+  workspace: marketdata
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+spec:
+  workloadSelector:
+    namespace: $PREFIX-quotes
+    labels:
+      app: $PREFIX-tsb-quotes-gateway
+  http:
+    - name: vm-internal
+      port: 80
+      hostname: vm.$PREFIX.mesh
+      routing:
+        rules:
+          - route:
+              host: "$PREFIX-quotes/quotes.$PREFIX-quotes.svc.cluster.local"
+              port: 8080
