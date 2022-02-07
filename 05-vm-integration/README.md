@@ -192,7 +192,7 @@ http:
 ```
 
 ### Testing the Application
-Now we can test our VM service via the mesh.  We will test via the demo application that is running in our Cloud B 01 Cluster.  Open a browser and navigate to https://demo-app.cloud-a-02.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of vm.$PREFIX.mesh/v1/quotes?q=GOOG (again, replace $PREFIX with your actual prefix).  We should see a response from our VM backend hosting our quotes service!
+Now we can test our VM service via the mesh.  We will test via the demo application that is running in our Cloud B 01 Cluster.  Open a browser and navigate to https://demo-app.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http).  In the Backend HTTP URL field enter the URL route we just configured, which should be in the form of vm.$PREFIX.mesh/v1/quotes?q=GOOG (again, replace $PREFIX with your actual prefix).  We should see a response from our VM backend hosting our quotes service!
 
 ![Base Diagram](../docs/05-app.png)
 
@@ -217,3 +217,22 @@ journalctl -u onboarding-agent -f
 .....
 Feb 07 18:15:55 ip-10-0-0-221.us-east-2.compute.internal bash[4184]: [2022-02-07T18:15:55.030Z] "GET /v1/quotes?q=GOOG HTTP/1.1" 200 - via_upstream - "-" 0 127 142 141 "172.41.0.66" "Go-http-client/1.1" "a8b0f221-b884-4004-a28e-25732b2c2d36" "vm.demo.mesh" "127.0.0.1:8081" inbound|8080|| 127.0.0.1:47506 10.0.0.221:8080 172.41.0.66:0 outbound_.8080_._.quotes.demo-quotes.svc.cluster.local default
 ```
+
+## Deploy Hybrid Application
+Suppose you now have migrated your VM workload to a container and would like to split traffic between the VM and cloud-native version.  This is handled automatically by the global service mesh.
+
+- Deploy a containerized version of the market data application into kubernetes using kubectl apply:
+
+```bash
+envsubst < 05-vm-integration/06-app-k8s.yaml | kubectl --context cloud-a-01 apply -f -
+```
+
+This will create a deployment and pod of the same application.  The only difference between our VM version is our kubernetes pod deployment has the label `version: v2`.
+
+- Traffic will now be split between the VM version and the containerized version.  Lets view our application metrics within the TSB UI.   Going back to the TSB UI, refresh the browser that has the TSB application open.  In the application dashboard view, click on the `Quotes` service to expand all versions.  You'll note that it is marked has *hybrid* and 2 versions of our service are listed.
+
+![Base Diagram](../docs/05-services-hybrid.png)
+
+Additionally, click on *Topology* on the top menu.  You'll now see the frontend application connecting to the marketdata gateway, which will load balance requests between the VM Version (v1) and the Pod version (v2).  All of this communication is secured via mTLS.
+
+![Base Diagram](../docs/05-topology.png)
