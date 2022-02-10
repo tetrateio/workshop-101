@@ -165,7 +165,7 @@ X509v3 Subject Alternative Name: critical
 - Seeing that we now have out Market Data service completely locked down, except for the ingress gateway, we now need to expose our service externally via the gateway.  We'll update the IngressGateway with a setting for external DNS resolution in addition to a TLS Certificate.
 
 ```bash
-envsubst < 06-app-security-s2s/04-external-config.yaml | kubectl cloud-a-01 apply -f -   
+envsubst < 06-app-security-s2s/04-external-config.yaml | kubectl --context cloud-a-01 apply -f -   
 ```
 
 Additionally, we'll update the mesh configuration to expose an external endpoint, which will be in addition to the internal endpoint of vm.$PREFIX.mesh, which will allow us to test the service as an external consumer.
