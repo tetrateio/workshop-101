@@ -1,0 +1,25 @@
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: $PREFIX-tsb-quotes-gateway
+  namespace: $PREFIX-quotes
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "quotes.$PREFIX.workshop.cx.tetrate.info."
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: quotes
+  namespace: $PREFIX-quotes
+spec:
+  secretName: quotes-certs
+  issuerRef:
+    name: letsencrypt-dns-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - quotes.$PREFIX.workshop.cx.tetrate.info

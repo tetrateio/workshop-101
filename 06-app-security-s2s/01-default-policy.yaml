@@ -1,0 +1,14 @@
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: secure-default
+  name: secure-default
+  organization: tetrate-workshop
+  tenant: $PREFIX-workshop
+  workspace: marketdata
+spec:
+  defaultSecuritySetting:
+    authenticationSettings:
+      trafficMode: REQUIRED
+  displayName: secure-default
