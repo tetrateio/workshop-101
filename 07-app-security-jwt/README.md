@@ -1,5 +1,5 @@
 # Overview
-Previously we focused on service to service security based on workload identity and configured policies to restrict access based on the Workspace in addition to direct SPIFFE identity.  New we will focus on creating end-user authentication and authroization policy based on a JWT token, ensuring that only properly authenticated users that have the right permissions can use the Market Data service
+Previously we focused on service to service security based on workload identity and configured policies to restrict access based on the Workspace in addition to direct SPIFFE identity.  Now we will focus on creating end-user authentication and authroization policy based on a JWT token, ensuring that only properly authenticated users that have the right permissions can use the Market Data service
 
 ## Request Authentication based on JWT
 First, lets verify we can access the Market Data service via its external ingress endpoint:

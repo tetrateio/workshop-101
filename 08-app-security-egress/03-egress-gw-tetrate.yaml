@@ -1,0 +1,15 @@
+---
+apiVersion: gateway.tsb.tetrate.io/v2
+kind: EgressGateway
+metadata:
+  tenant: $PREFIX-workshop
+  organization: tetrate-workshop
+  workspace: workshop-app
+  group: egress
+  name: egress-gateway
+spec:
+  workloadSelector:
+    namespace: $PREFIX-security 
+    labels:
+      app: $PREFIX-cluster-egress
+  authorization: []

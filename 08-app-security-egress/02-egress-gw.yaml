@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: $PREFIX-security
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: EgressGateway
+metadata:
+  name: $PREFIX-cluster-egress
+  namespace: $PREFIX-security
+spec:
+  kubeSpec:
+    service:
+      type: ClusterIP

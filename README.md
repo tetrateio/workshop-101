@@ -23,7 +23,7 @@ The target state infrastucture architecture is comprised of 4 Kubernetes cluster
 5. Security Policy [Slides](https://docs.google.com/presentation/d/1T26gs7pWtNKp0qI6AT1gfQzDQhV8iNFb7n-dOC1chro/edit#slide=id.gb61fe1c3b5_0_0)
     1. [Lab - Service to Service AuthN/Z](06-app-security-s2s/README.md)
     2. [Lab - End User JWT AuthN/Z](07-app-security-jwt/README.md)
-    3. [Lab - Egress Policy](08-app-security-egress/README.md) -- TODO
+    3. [Lab - Egress Policy](08-app-security-egress/README.md)
     
 
 ## Applications
