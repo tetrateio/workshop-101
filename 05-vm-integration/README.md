@@ -227,7 +227,7 @@ Suppose you now have migrated your VM workload to a container and would like to 
 envsubst < 05-vm-integration/06-app-k8s.yaml | kubectl --context cloud-a-01 apply -f -
 ```
 
-This will create a deployment and pod of the same application.  The only difference between our VM version is our kubernetes pod deployment has the label `version: v2`.
+This will create a deployment and pod of the same application.  The only difference between our VM version is our kubernetes pod deployment has the label `version: v2`.  Refresh the browser window that has the Frontend app, which called the backend: `vm.free.mesh/v1/quotes?q=GOOG` a few times in order to generate a bit of traffic to bother version of the service.
 
 - Traffic will now be split between the VM version and the containerized version.  Lets view our application metrics within the TSB UI.   Going back to the TSB UI, refresh the browser that has the TSB application open.  Click the *Select Clusters-Namespaces* button an add the $PREFIX-quotes namespace to the list of services to be displayed.  In the application dashboard view, click on the `Quotes` service to expand all versions.  You'll note that it is marked has *hybrid* and 2 versions of our service are listed.
 
