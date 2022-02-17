@@ -74,9 +74,9 @@ We have deployed our services across 3 clusters -- 2 clusters in cloud A and 1 c
 | Cloud B - 01 | frontend        | demo-app.cloud-b-01.$PREFIX.workshop.cx.tetrate.info       | N/A        |
 |  | backend        | N/A        | backend.$PREFIX.mesh      |
 
-Open your browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info.  Make sure you replace $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend service -- `backend.$PREFIX.mesh`.  This will cause the frontend microservice to call to the backend microservice over the service mesh and return the display the response via the frontend app.  
+Open your browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info.  Make sure you replace $PREFIX in the URL with your prefix value.  The application should display in your browser.  Enter the internal address for the backend service -- `backend.$PREFIX.mesh`.  Again, replacing $PREFIX with your actual enviroment prefix.  This will cause the frontend microservice to call to the backend microservice over the service mesh and return the display the response via the frontend app.  
 
-- Next lets view our application metrics within the TSB UI.  Log into the TSB UI by opening another browser tab and navigating to `https://tetrate-workshop.tsb.azure.tetrate.com/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared Google sheet that you obtained jumpbox information from.  Once logged in, you will be routed to the Dashboard view.  You'll need to select the clusters you want displayed; in our case we want to see information about services in all clusters.  Click the `SELECT CLUSTERS-NAMESPACES` button and select all clusters and namespaces.  When we installed our applications in the previous lab, we also installed a traffic generator.  This is the reason when we begin utilizing the UI we see a steady stream of traffic flowing.
+- Next lets view our application metrics within the TSB UI.  Log into the TSB UI by opening another browser tab and navigating to `https://tetrate-workshop.tsb.azure.tetrate.com/admin/login`.  Select `Log in with OIDC` and when prompted enter your TSB credentials.  These can be found in the shared Google sheet that you obtained jumpbox information from.  Once logged in, you will be routed to the Dashboard view.  You'll need to select the clusters you want displayed; in our case we want to see information about services in all clusters.  Click the `SELECT CLUSTERS-NAMESPACES` button and select all clusters and namespaces.  When we installed our applications in the previous lab, we also installed a traffic generator.  This is the reason when we begin utilizing the UI we see a steady stream of traffic flowing.
 
 ![Base Diagram](../docs/03-clusters.png)
 
@@ -85,7 +85,7 @@ Then click the Topology tab in the top center portion of the UI.  This will disp
 ![Base Diagram](../docs/03-topo.png)
 
 ## Deploying a Tier 1 Edge Load Balancer
-Now that we have deployed and configured our applications in all 3 clsuters we can setup a `Tier 1 Gateway`, which is an Ingress Gateway that understands the multi-cluster topology of an application and is able to load balance across instances of the application regardless of what cloud, region, or cluster they are running in.  During this last setup we will target a new cluster, which has the solve purpose of hosting Tier 1 Gateways.  
+Now that we have deployed and configured our applications in all 3 clusters we can setup a `Tier 1 Gateway`, which is an Ingress Gateway that understands the multi-cluster topology of an application and is able to load balance across instances of the application regardless of what cloud, region, or cluster they are running in.  During this last setup we will target a new cluster, which has the sole purpose of hosting Tier 1 Gateways.  
 
 - First we need to apply the TSB IngressGateway configuration for the `Tier1Gateway` in the Tier 1 cluster.  Use the `tctl apply` command create objects.  As with our other lab scenarios, under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply command and then we'll inspect the configuration a bit further.
 
@@ -135,7 +135,7 @@ http:
 How does this work?  We'll explore the configuration pushed out to our *cloud A 01* cluster, which is where the frontend application you tested with is running.  You can view the global config that was automatically distributed across the mesh by executing the following command to show `ServiceEntries` that were created.  This configuration instructs the frontend's service mesh sidecar how to connect to the backend running on a different cluster.
 
 ```bash
-kubectl --context cloud-a-01 describe serviceentries.networking.istio.io -n xcp-multicluster gateway-backend-demo-mesh
+kubectl --context cloud-a-01 describe serviceentries.networking.istio.io -n xcp-multicluster gateway-backend-$PREFIX-mesh
 ```
 
 ```bash
