@@ -20,7 +20,6 @@ spec:
     to: westus2
   displayName: default-settings
 ---
----
 apiVersion: api.tsb.tetrate.io/v2
 kind: WorkspaceSetting
 metadata:
