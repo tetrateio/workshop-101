@@ -11,7 +11,7 @@ spec:
     resilience:
       httpRequestTimeout: "1s"
       httpRetries:
-        attempts: 3
+        attempts: 6
         perTryTimeout: "1s"
         retryOn: 5xx
       circuitBreakerSensitivity: HIGH
@@ -19,3 +19,15 @@ spec:
   - from: eastus2    
     to: westus2
   displayName: default-settings
+---
+---
+apiVersion: api.tsb.tetrate.io/v2
+kind: WorkspaceSetting
+metadata:
+  displayName: secure-default
+  name: secure-default
+  organization: tetrate-workshop
+  tenant: $PREFIX-workshop
+  workspace: marketdata
+spec:
+  displayName: secure-default
