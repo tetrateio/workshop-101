@@ -80,7 +80,7 @@ spec:
 
 ![External Access](../docs/08-egress-2.png)
 
-You will also see log messages in the egress gateway indicating the traffic to www.httpbin.org.  If you initially don't see this message, refresh a few more times.  Since we are load balancing across all 3 clusters there is a chance the command below targeted a cluster that did not receive any egress traffic:
+You will also see log messages in the egress gateway indicating the traffic to www.httpbin.org was denied.  If you initially don't see this message, refresh a few more times.  Since we are load balancing across all 3 clusters there is a chance the command below targeted a cluster that did not receive any egress traffic:
 
 ```bash
 export POD_NAME=$(kubectl --context cloud-a-01 get po -n $PREFIX-security -l istio=egressgateway --output=jsonpath='{.items[].metadata.name}') 
@@ -145,7 +145,7 @@ Once again, go back in your browser and enter www.httpbin.org in the HTTP Backen
 ![External Access](../docs/08-egress-4.png)
 
 
-2. Workload identities are assigned to kubernetes workloads based on `ServiceAccount`.  Using `kubectl` create the secure-frontend `ServiceAccount` and then patch the frontend deployment to use this identity:
+2. Workload identities are assigned to kubernetes workloads based on `ServiceAccount`.  Using `kubectl`, create the secure-frontend `ServiceAccount` and then patch the frontend deployment to use this identity:
 
 ```bash
 kubectl --context cloud-a-01 -n $PREFIX-workshop-app create sa secure-frontend
