@@ -1,10 +1,17 @@
 # Overview
 Throughout the labs contained within this workshop we will be interacting with the environment through 3 primary ways:
+1. TSB via a browser
+2. TSB via tctl cli
+3. Kubernetes via kubectl
 
 ## Accessing TSB Via Web Browser
-TSB can be accessed in a browser at: [https://tetrate-workshop.tsb.azure.tetrate.com/admin/login](https://tetrate-workshop.tsb.azure.tetrate.com/admin/login)  You will utilize a Azure AD account that has been provisioned for you.  By selecting `Log In With OICD` you will be redirected to Azure to authenticate.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`
+TSB can be accessed in a browser at: [https://tetrate-workshop.tsb.azure.tetrate.com/admin/login](https://tetrate-workshop.tsb.azure.tetrate.com/admin/login)  You will utilize an Azure AD account that has been provisioned for you.  By selecting `Log In With OICD` you will be redirected to Azure to authenticate.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`
 
 ![Base Diagram](../docs/00-tsb-ui.png)
+
+When you log in you may be asked to install a Multi-factor Auth app.  If so, select "Skip For Now".
+
+![Base Diagram](../docs/00-azure-skip.png)
 
 ## Accessing TSB Via TCTL CLI
 For a large part of the hands-on labs we will be interacting with TSB via API calls.  These are most easily invoked via the `tctl` CLI.  This has already been installed on the jumpbox.  Login using the following command, which will prompt you to authenticate with Azure AZ.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`.  Follow the prompts to confirm that you are logging in the applicatin `Tetrate-Workshop`.
@@ -12,7 +19,7 @@ For a large part of the hands-on labs we will be interacting with TSB via API ca
 ```bash
 tctl config clusters set default --bridge-address $TSB_HOST
 tctl login --use-device-code # Follow directions to authenticate in browser
-tctl get organizations  # This is a quick validation that we were successful
+tctl get tenants  # This is a quick validation that we were successful
 ```
 
 During initialization a config file will be created `~/.config/tetrate/tctl/tctl_config` containing the TSB endpoint and your authorization token used for API calls.  
@@ -40,12 +47,19 @@ For many of the CLI commands, both `kubectl` and `tctl`, a preset environment va
 echo Workshop environment PREFIX: $PREFIX
 ```
 
+Additionally, all commands should b executed with a shell context of `/home/ec2-user/workshop-101`.  Made sure you CD into that directory:
+
+```bash
+cd workshop-101/
+```
+
+
 When executing the CLI commands, which typically accept YAML as an input, we will use the linux command `envsubst` to replace references to `$PREFIX` with the value that is unique to your env.  Test this out:
 
 ```bash
 echo "File without variable substitution:"
 cat 00-env-access/01-test.yaml
-echo "\nFile WITH variable substitution:"
+echo "File WITH variable substitution:"
 envsubst < 00-env-access/01-test.yaml
 ```
 

@@ -1,12 +1,12 @@
 # Overview
-Although containers and Kubernetes are widely used, there are still many services deployed on virtual machines (VM) and APIs outside of the Kubernetes cluster that needs to be managed by TSB. It is possible to bring these VMs into the Istio mesh. To successfully extend an Istio/Kubernetes cluster with a VM, the VM workload(s) must be able to do the following:
+Although containers and Kubernetes are widely used, there are still many services deployed on virtual machines (VMs) and APIs outside of a Kubernetes cluster can also benefit from being part of a global service mesh. It is possible to bring these VMs into TSB and the underlying Istio mesh. To successfully extend an Istio/Kubernetes cluster to a VM, the VM workload(s) must be able to do the following:
 
 - **Authentication:** The VM must establish an authenticated encrypted session to the control plane. The VM must prove that it is allowed to join the cluster.
 - **Routing:** The VM must be aware of the services defined in the Kubernetes cluster and vice-versa. If the VM runs a service, it must be visible to pods running inside the cluster.
 
 Onboarding a Virtual Machine (VM) into a TSB managed Istio service mesh can be broken down into the following steps:
 
-- Create kubernetes namespace, service , and serviceaccount for VM Worksloads. 
+- Create kubernetes namespace, service , and serviceaccount for VM Workloads. 
 - Create an `OnboardingPolicy` and register the VM(s) `WorkloadGroup` with the Istio control plane, along with the associated Istio `Sidecar` policy.
 - Install Envoy proxy on VM (typically RPM or DEB package)
 - Install, Configure, and Inititialize the Tetrate Onboarding-Agent on the VM.
@@ -37,7 +37,7 @@ envsubst < 05-vm-integration/01-basic-k8s-objects.yaml | kubectl --context cloud
 envsubst < 05-vm-integration/02-services.yaml | kubectl --context cloud-a-01 apply -f -
 ``` 
 
-Take a look at the file `05-vm-integration/02-servces.yaml`.  First you'll see a standard kubernetes service that exposes kubernetes pods that match the selector `app: quotes` on port 8080.  This will eventually match our VM.
+Take a look at the file `05-vm-integration/02-services.yaml`.  First you'll see a standard kubernetes service that exposes kubernetes pods that match the selector `app: quotes` on port 8080.  This will eventually match our VM.
 
 ```yaml
 spec:
@@ -58,7 +58,7 @@ envsubst < 05-vm-integration/03-workload-onboarding-k8s.yaml | kubectl --context
 ``` 
 
 Take a look at the file `05-vm-integration/03-workload-onboarding-k8s.yaml`.  
-- You will see the definition of the `WorkloadGroup`, which, in effect, represents a collection of VMs -- very similar to a kubernetes ReplicaSet.  The `spec` definition is pretty simple.  It informs the mesh how to assign a service identity, the SPIFFE Idenitity in the x509 ceritifcate, along with the labels that can be used to select our VM and associate with a other Kubernetes objects, such as our `Service` we just defined with the selector `app: quotes`.  The `network` attribute is also important as this instructs the mesh whether the VM and pods are directly routable or if there is a gateway required for communication.
+- You will see the definition of the `WorkloadGroup`, which, in effect, represents a collection of VMs -- very similar to a kubernetes ReplicaSet.  The `spec` definition is pretty simple.  It informs the mesh how to assign a service identity, the SPIFFE Idenitity in the x509 ceritifcate, along with the labels that can be used to select our VM and associate with other Kubernetes objects, such as our `Service` we just defined with the selector `app: quotes`.  The `network` attribute is also important as this instructs the mesh whether the VM and pods are directly routable or if there is a gateway required for communication.
 ```yaml
 spec:
   template:
@@ -70,7 +70,7 @@ spec:
     network: external
 ```
 
-- Additionally, the `Sidecar` controls the mesh configuration for the VM Envoy proxy -- aka the sidecar.  The selectors match what is configured in the `WorkloadGroup`, ensuring this `Sidecar` is applied to any VM that joins the `WorkloadGroup`.  Most importantly, you'll note the section in the `spec` that outline how ingress, and optionally egress, is configured for the VM workload and the proxy.  Our quotes service is listening on the VM at `127.0.0.1:8081` and we want to expose it to kubernetes on port 8080.  The port name and number match what was previsouly configured in the kubernetes `Servce` object:
+- Additionally, the `Sidecar` controls the mesh configuration for the VM Envoy proxy -- aka the sidecar.  The selectors match what is configured in the `WorkloadGroup`, ensuring this `Sidecar` is applied to any VM that joins the `WorkloadGroup`.  Most importantly, you'll note the section in the `spec` that outline how ingress, and optionally egress, is configured for the VM workload and the proxy.  Our quotes service is listening on the VM at `127.0.0.1:8081` and we want to expose it to kubernetes on port 8080.  The port name and number match what was previously configured in the kubernetes `Service` object:
 ```yaml
 spec:
   workloadSelector:
@@ -112,13 +112,13 @@ curl http://169.254.169.254/latest/meta-data/iam/info
 4. Next, we need to install the onboarding agent, which drives auto-registration, and the Envoy proxy on our jumpbox.  These can be downloaded from an endpoint exposed on the service mesh control plane.  Execute the following commands to download and install these components:
 
 ```bash
-wget https://onboarding.cloud-a-02.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm
-wget https://onboarding.cloud-a-02.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm.sha256
+wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm
+wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm.sha256
 sha256sum --check istio-sidecar.rpm.sha256
 sudo yum -y install istio-sidecar.rpm
 
-wget https://onboarding.cloud-a-02.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm
-wget https://onboarding.cloud-a-02.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm.sha256
+wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm
+wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm.sha256
 sha256sum --check onboarding-agent.rpm.sha256
 sudo yum -y install onboarding-agent.rpm
 ```
@@ -136,10 +136,10 @@ Take a look at the file `05-vm-integration/04-onboarding-config.yaml`.  The prim
 ```yaml
 ...
 onboardingEndpoint:
-  host: onboarding.cloud-a-02.workshop.cx.tetrate.info
+  host: onboarding.cloud-a-01.workshop.cx.tetrate.info
   transportSecurity:
     tls:
-      sni: onboarding.cloud-a-02.workshop.cx.tetrate.info
+      sni: onboarding.cloud-a-01.workshop.cx.tetrate.info
 workloadGroup:
   namespace: $PREFIX-quotes
   name: quotes
@@ -166,9 +166,9 @@ journalctl -u onboarding-agent -ocat
 
 The `WorkloadAutoRegistration` will inform us of any VMs registered with the workload while the `WorkloadEntry` will inform us of workloads associated with the `WorkloadGroup`:
 ```bash
-kubectl --context cloud-a-01 describe WorkloadAutoRegistration
+kubectl --context cloud-a-01 -n $PREFIX-quotes describe WorkloadAutoRegistration
 
-kubectl --context cloud-a-01 get workloadentries.networking.istio.io
+kubectl --context cloud-a-01 -n $PREFIX-quotes get workloadentries.networking.istio.io
 ```
 
 6. Our VM is now onboarded into the service mesh.  However, our last step is to expose a endpoint for global service discovery and routing.  Using the `tctl apply` command create a Tetrate `IngressGateway` for the VM workload.  Under the covers TSB will create all the needed service mesh configuration objects. Execute the following apply commands and then we'll inspect the configuration a bit further:
@@ -227,9 +227,9 @@ Suppose you now have migrated your VM workload to a container and would like to 
 envsubst < 05-vm-integration/06-app-k8s.yaml | kubectl --context cloud-a-01 apply -f -
 ```
 
-This will create a deployment and pod of the same application.  The only difference between our VM version is our kubernetes pod deployment has the label `version: v2`.
+This will create a deployment and pod of the same application.  The only difference between our VM version is our kubernetes pod deployment has the label `version: v2`.  Refresh the browser window that has the Frontend app, which called the backend: `vm.free.mesh/v1/quotes?q=GOOG` a few times in order to generate a bit of traffic to bother version of the service.
 
-- Traffic will now be split between the VM version and the containerized version.  Lets view our application metrics within the TSB UI.   Going back to the TSB UI, refresh the browser that has the TSB application open.  In the application dashboard view, click on the `Quotes` service to expand all versions.  You'll note that it is marked has *hybrid* and 2 versions of our service are listed.
+- Traffic will now be split between the VM version and the containerized version.  Lets view our application metrics within the TSB UI.   Going back to the TSB UI, refresh the browser that has the TSB application open.  Click the *Select Clusters-Namespaces* button an add the $PREFIX-quotes namespace to the list of services to be displayed.  In the application dashboard view, click on the `Quotes` service to expand all versions.  You'll note that it is marked has *hybrid* and 2 versions of our service are listed.
 
 ![Base Diagram](../docs/05-services-hybrid.png)
 

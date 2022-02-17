@@ -43,12 +43,12 @@ In the `authorization` section we configure the AuthZ rules we want to apply to 
 
 2. Verify that you no longer can invoke the market data service when you are unauthenticated:
 
-- No authentication JWT provided:
+- Test authentication when no JWT is provided:
 ```bash
 curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
 ```
 
-- Valid JWT not signed by issuer:
+- Test using a JWT that is valid but not signed by issuer we configured:
 ```bash
 export TOKEN="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8_-RU8VNbftc4TSMb4bXP3l3YlNWACwyXPGffz5aXHc6lty1Y2t4SWRqGteragsVdZufDn5BlnJl9pdR_kdVFUsra2rWKEofkZeIC4yWytE58sMIihvo9H1ScmmVwBcQP6XETqYd0aSHp1gOa9RdUPDvoXQ5oqygTqVtxaDr6wUFKrKItgBMzWIdNZ6y7O9E0DhEPTbE9rfBo6KTFsHAZnMg4k68CDp2woYIaXbmYTWcvbzIuHO7_37GT79XdIwkm95QJ7hYC9RiwrV7mesbY4PAahERJawntho0my942XheVLmGwLMBkQ"
 curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
@@ -70,8 +70,10 @@ echo $TOKEN
 curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
 ```
 
+This time we receive a 200 reponse code along with our market data quote.
+
 ## Request Authorization based on JWT claims
-Our application ingress is now authenticating for any valid JWT token from our OIDC provider.  However, we do not have any policy for authorizing the correct users.  Within TSB establishing this policy is an easy task.
+Our application ingress is now authenticating any valid JWT token from our OIDC provider.  However, we do not have any policy for authorizing the correct users.  Within TSB establishing this policy is an easy task.
 
 1.  Configure the `IngressGateway` for the market data service with request `authentication` and `authorization` policy to enforce JWT validation and rules based on the token claims using `tctl apply`:
 
@@ -116,7 +118,7 @@ echo $TOKEN
 curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
 ```
 
-This call will fail with an `HTTP 403` response code and a message `RBAC: Access Denied`.  By decoding the JWT token we can verify that this user does not have the proper claim: `https://tetrate.io/role: market-data`:
+This call will fail with an `HTTP 403` response code and a message `RBAC: Access Denied`.  By decoding the JWT token we can verify that this user does not have the proper claim: `https://tetrate.io/role: market-data`; instead the role is `general`:
 ```bash
 ./07-app-security-jwt/jwt-decode.sh
 ```

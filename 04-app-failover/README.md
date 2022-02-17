@@ -4,7 +4,7 @@ When failures occur the mesh will automatically shift traffic to other services 
 ![Base Diagram](../docs/arch.png)
 
 ## Automatic Failover
-- We will be creating default settings within our workspace to control failover.  However, we could also set idenitical configuration at a global leve.  Using the `tctl apply` command create a Tetrate `WorkspaceSetting`.  Under the covers TSB will create all the needed service mesh configuration objects to shape our traffic.
+- We will be creating default settings within our workspace to control failover.  However, we could also set idenitical configuration at a global level.  Using the `tctl apply` command create a Tetrate `WorkspaceSetting`.  Under the covers TSB will create all the needed service mesh configuration objects to shape our traffic.
 
 ```bash
 envsubst < 04-app-failover/01-workspace-setting.yaml | tctl apply -f -  
@@ -56,7 +56,7 @@ Wait a few seconds for the pods to completely terminate.  Go back to the browser
 ```bash
 kubectx cloud-a-01 
 export POD_NAME=$(kubectl get po -n $PREFIX-workshop-app -l app=frontend --output=jsonpath={.items..metadata.name})
-istioctl proxy-config endpoints $POD_NAME.$PREFIX-workshop-app --cluster "outbound|80||backend.demo.mesh" 
+istioctl proxy-config endpoints $POD_NAME.$PREFIX-workshop-app --cluster "outbound|80||backend.$PREFIX.mesh" 
 ```
 
 Note we have one failed endpoint.

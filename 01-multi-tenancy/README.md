@@ -1,5 +1,5 @@
 # Overview
-The first thing that is needed prior to working deploying and introduce applications and config into our global mesh is are the objects that create multi-tenancy within Tetrate Service Bridge.  The Tenant, Workspace(s), and Group(s) that are created will allow us to bind policy and configuration to our applications, controlling application traffic and routing, security, and observability.  The concepts within multi-tenancy are also where we bind the logical concepts of an Application and associated mesh configuration to physical compute infrastructure.
+The first thing that is needed prior to deploying and introducing applications and the associated configuration into our global mesh are the objects that create multi-tenancy within Tetrate Service Bridge.  The Tenant, Workspace(s), and Group(s) that are created will allow us to bind policy and configuration to our applications, controlling application traffic and routing, security, and observability.  The concepts within multi-tenancy are also where we bind the logical concepts of an Application and associated mesh configuration to physical compute infrastructure.
 
 ![Base Diagram](../docs/01-tenant.png)
 
@@ -9,12 +9,12 @@ During this lab we will utilizing the `tctl` CLI to interact with the TSB Manage
 tctl get tenant $PREFIX-workshop
 ```
 
-If you are not logged in please return to the environment access and complete the TCTL CLI login section prior to continuing.
+You should response that lists one Tenant, even though there are many workshop users utilizing this environment.  If you are not logged in please return to the environment access and complete the TCTL CLI login section prior to continuing.
 
 ## Tenants
 Since a `Tenant` is at the top of the multi-tenancy hierarchy this object has already created.  Your tenant is dedicated to your applications and namespaces.  Let's take a close look at the API Objects that defined the `Tenant`.
 
-1. Once again execute the `tctl` CLI command to retrieve your tenant details.  This time will instruct the command to output the object in YAML form.  This API Object is about as simple as it gets; the `organization` and `name` fields are the most relevant as these uniquely identify your tenant within the system.
+1. Once again execute the `tctl` CLI command to retrieve your tenant details.  This time we will instruct the command to output the object in YAML form.  This API Object is about as simple as it gets; the `organization` and `name` fields are the most relevant as these uniquely identify your tenant within the system.
 ```bash
 tctl get tenant $PREFIX-workshop -o yaml
 ```
