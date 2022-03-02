@@ -5,7 +5,7 @@ Previously we focused on service to service security based on workload identity 
 First, lets verify we can access the Market Data service via its external ingress endpoint:
 
 ```bash
-curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 Even though request-level authentication was not provided, the call should succeed and return you a market quote.
@@ -45,13 +45,13 @@ In the `authorization` section we configure the AuthZ rules we want to apply to 
 
 - Test authentication when no JWT is provided:
 ```bash
-curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 - Test using a JWT that is valid but not signed by issuer we configured:
 ```bash
 export TOKEN="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8_-RU8VNbftc4TSMb4bXP3l3YlNWACwyXPGffz5aXHc6lty1Y2t4SWRqGteragsVdZufDn5BlnJl9pdR_kdVFUsra2rWKEofkZeIC4yWytE58sMIihvo9H1ScmmVwBcQP6XETqYd0aSHp1gOa9RdUPDvoXQ5oqygTqVtxaDr6wUFKrKItgBMzWIdNZ6y7O9E0DhEPTbE9rfBo6KTFsHAZnMg4k68CDp2woYIaXbmYTWcvbzIuHO7_37GT79XdIwkm95QJ7hYC9RiwrV7mesbY4PAahERJawntho0my942XheVLmGwLMBkQ"
-curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 Both of these requests will result in an `HTTP 401` or `HTTP 403` response code.
@@ -67,7 +67,7 @@ export TOKEN=$(curl --request POST \
   --data username=plain-user@tetrate.io --data password=t3trat3! | jq -r '.id_token')
 echo "JWT Token:"
 echo $TOKEN
-curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 This time we receive a 200 reponse code along with our market data quote.
@@ -115,7 +115,7 @@ export TOKEN=$(curl --request POST \
   --data username=plain-user@tetrate.io --data password=t3trat3! | jq -r '.id_token')
 echo "JWT Token:"
 echo $TOKEN
-curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 This call will fail with an `HTTP 403` response code and a message `RBAC: Access Denied`.  By decoding the JWT token we can verify that this user does not have the proper claim: `https://tetrate.io/role: market-data`; instead the role is `general`:
@@ -151,7 +151,7 @@ export TOKEN=$(curl --request POST \
   --data username=market-data-user@tetrate.io --data password=t3trat3! | jq -r '.id_token')
 echo "JWT Token:"
 echo $TOKEN
-curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG
+curl -i -H "Authorization: Bearer $TOKEN" https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 By decoding the JWT token we can verify that this user has the proper claim: `https://tetrate.io/role: market-data`:
