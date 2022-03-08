@@ -9,7 +9,7 @@ kubectl --context cloud-a-01 run $PREFIX-shell -n default --rm -i --tty --image 
 Once your pod starts up and you get a bash command line execute a curl command to the market data service:
 
 ```bash
-curl -i quotes.$PREFIX-quotes:8080/v1/quotes?q=GOOG
+curl -i quotes.$PREFIX-quotes:8080/quotes/GOOG
 ```
 
 We were able to send a plain HTTP request to the service and our request was trusted simply because we are in the same kubernetes cluster.  That is a bad thing!  We will now add some security policy to our Market Data service:
@@ -43,13 +43,13 @@ kubectl --context cloud-a-01 run $PREFIX-shell -n default --rm -i --tty --image 
 Once your pod starts up and you get a bash command line execute the same curl command to the market data service:
 
 ```bash
-curl -i quotes.$PREFIX-quotes:8080/v1/quotes?q=GOOG
+curl -i quotes.$PREFIX-quotes:8080/quotes/GOOG
 ```
 
 The message `Recv failure: Connection reset by peer` is indiciative of our request being rejected because we did not provide a valid client certificate.
 
 # Configure Service to Service Authorization
-Lets verify that the inter-mesh traffic is still functioning between our demo-app, which has been the frontend app we have been utilizing in a browser, and the market data service.  Open a browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http). In the Backend HTTP URL field enter the following url, which will invoke the market data service: `quotes.$PREFIX-quotes:8080/v1/quotes?q=GOOG` (again, replace $PREFIX with your actual prefix). We should see a response from either our VM backend or the pod, since our traffic is load balanced between the 2.  This is still functional because it is traffic within the mesh and the demo-app frontend is able to present a valid service identity in the form of a client ceritificate.  
+Lets verify that the inter-mesh traffic is still functioning between our demo-app, which has been the frontend app we have been utilizing in a browser, and the market data service.  Open a browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http). In the Backend HTTP URL field enter the following url, which will invoke the market data service: `quotes.$PREFIX-quotes:8080/quotes/GOOG` (again, replace $PREFIX with your actual prefix). We should see a response from either our VM backend or the pod, since our traffic is load balanced between the 2.  This is still functional because it is traffic within the mesh and the demo-app frontend is able to present a valid service identity in the form of a client ceritificate.  
 
 ![Base Diagram](../docs/06-security-authn1.png)
 
@@ -81,7 +81,7 @@ export POD_NAME=$(kubectl get po -n $PREFIX-workshop-app -l app=frontend --outpu
 kubectl --context cloud-a-01 -n $PREFIX-workshop-app logs $POD_NAME istio-proxy | grep 'v1/quotes'
 ```
 ```bash
-[2022-02-17T15:13:50.963Z] "GET /v1/quotes?q=GOOG HTTP/1.1" 403 - via_upstream - "-" 0 19 0 0 "-" "Go-http-client/1.1" "43d362b4-8b34-435a-a6f4-05cb16aee490" "quotes.free-quotes:8080" "172.41.0.20:8080" outbound|8080||quotes.free-quotes.svc.cluster.local 172.41.0.14:52324 172.40.25.205:8080 172.41.0.14:42538 - default
+[2022-02-17T15:13:50.963Z] "GET /quotes/GOOG HTTP/1.1" 403 - via_upstream - "-" 0 19 0 0 "-" "Go-http-client/1.1" "43d362b4-8b34-435a-a6f4-05cb16aee490" "quotes.free-quotes:8080" "172.41.0.20:8080" outbound|8080||quotes.free-quotes.svc.cluster.local 172.41.0.14:52324 172.40.25.205:8080 172.41.0.14:42538 - default
 ```
 
 While this is a great step forward, we still have an implicit trust that any service running within our workspace is authorized to invoke our market data service.  Imagine the scenario of a 3 tier application comprised of a web frontend, backend business logic, and a relational database.  We may not want the frontend to be able to communicate directly with the database.  It is a best practice to be as explicit as possible with respect to servce to service authorization.  
@@ -95,7 +95,7 @@ kubectl --context cloud-a-01 run $PREFIX-shell -n $PREFIX-quotes --rm -i --tty -
 Once your pod starts up and you get a bash command line execute the same curl command to the quotes service, which is running in the same namespace:
 
 ```bash
-curl -i quotes:8080/v1/quotes?q=GOOG
+curl -i quotes:8080/quotes/GOOG
 ```
 
 You'll see that that this call was successful.  Exit out of the shell.  Lets apply the correct policy to restrict communication to *only* the ingress gateway. 
@@ -127,7 +127,7 @@ kubectl --context cloud-a-01 run shell -n $PREFIX-quotes -i --tty --image nicola
 Once your pod starts up and you get a bash command line execute the same curl command to the quotes service, which is running in the same namespace:
 
 ```bash
-curl -i quotes:8080/v1/quotes?q=GOOG
+curl -i quotes:8080/quotes/GOOG
 ```
 
 Now our call is denied with a http 403 response code and message `RBAC: access denied`.  Exit out of the pod.  We can futher confirm why we saw this behavior by inspecting the mesh workload identities of both the helper curl pod and the ingress gateway.  we'll do this using the `istioctl` cli, which provides the ability to inspect certificates loaded into the Envoy proxy.
@@ -186,7 +186,7 @@ envsubst < 06-app-security-s2s/05-mesh-config.yaml | tctl apply -f -
 Out service is now available from anywhere, a browser or curl command, outside the cluster.
 
 ```bash
-curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/v1/quotes\?q\=GOOG 
+curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
 ```
 
 *** Note - it may take about a minute to issue the TSL certificate for the public endpoint.  If you receive an error response to the curl command, verify that the TLS certificate has been issued, which will be indicated by the `Ready` field when retreiving the certificate using `kubectl`.  If `Ready = False`, wait a few more moments and check again.
