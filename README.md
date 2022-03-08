@@ -41,4 +41,4 @@ A simple application that retrieves market data.  This application is deployed t
 ![Base Diagram](docs/quotes.png)
 
 ## Preparing Workshop environment
-todo... link to how to setup.  Will be based off of [this repo w/ templates](https://github.com/tetrateio/workshop-environment).
+Follow the instructions in the [workshop-101 branch of this repo.](https://github.com/tetrateio/workshop-environment/tree/workshop-101).
