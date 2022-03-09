@@ -78,7 +78,7 @@ We could also verify this by looking at the logs for network connections that we
 ```bash
 kubectx cloud-a-01
 export POD_NAME=$(kubectl get po -n $PREFIX-workshop-app -l app=frontend --output=jsonpath={.items..metadata.name})
-kubectl --context cloud-a-01 -n $PREFIX-workshop-app logs $POD_NAME istio-proxy | grep 'v1/quotes'
+kubectl --context cloud-a-01 -n $PREFIX-workshop-app logs $POD_NAME istio-proxy | grep '/quotes'
 ```
 ```bash
 [2022-02-17T15:13:50.963Z] "GET /quotes/GOOG HTTP/1.1" 403 - via_upstream - "-" 0 19 0 0 "-" "Go-http-client/1.1" "43d362b4-8b34-435a-a6f4-05cb16aee490" "quotes.free-quotes:8080" "172.41.0.20:8080" outbound|8080||quotes.free-quotes.svc.cluster.local 172.41.0.14:52324 172.40.25.205:8080 172.41.0.14:42538 - default
