@@ -6,7 +6,7 @@ metadata:
   group: frontend-gw-01
   workspace: workshop-app
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
 spec:
   workloadSelector:
     namespace: $PREFIX-workshop-app
