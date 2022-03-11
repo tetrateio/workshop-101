@@ -27,7 +27,7 @@ curl -i localhost:8081/quotes/GOOG
 ```
 
 ### Onboarding
-1. Our Market Data microservice will run in its own namespace, so first we need to create the `Namespace`, `ServiceAccount`, and `Service` using kubectl:
+1. Our Market Data microservice will run in its own namespace, so first we need to create the `Namespace` and `ServiceAccount` using kubectl:
 ```bash
 envsubst < 05-vm-integration/01-basic-k8s-objects.yaml | kubectl --context cloud-a-01 apply -f -
 ``` 
