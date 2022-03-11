@@ -49,7 +49,7 @@ curl -i quotes.$PREFIX-quotes:8080/quotes/GOOG
 The message `Recv failure: Connection reset by peer` is indiciative of our request being rejected because we did not provide a valid client certificate.
 
 # Configure Service to Service Authorization
-Lets verify that the inter-mesh traffic is still functioning between our demo-app, which has been the frontend app we have been utilizing in a browser, and the market data service.  Open a browser and navigate to https://demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http). In the Backend HTTP URL field enter the following url, which will invoke the market data service: `quotes.$PREFIX-quotes:8080/quotes/GOOG` (again, replace $PREFIX with your actual prefix). We should see a response from either our VM backend or the pod, since our traffic is load balanced between the 2.  This is still functional because it is traffic within the mesh and the demo-app frontend is able to present a valid service identity in the form of a client ceritificate.  
+Lets verify that the inter-mesh traffic is still functioning between our demo-app, which has been the frontend app we have been utilizing in a browser, and the market data service.  Open a browser and navigate to https://demo-app.$PREFIX.workshop.cx.tetrate.info (replace $PREFIX with your actual prefix and make sure you're using https not http). In the Backend HTTP URL field enter the following url, which will invoke the market data service: `vm.$PREFIX.mesh/quotes/GOOG` (again, replace $PREFIX with your actual prefix). We should see a response from either our VM backend or the pod, since our traffic is load balanced between the 2.  This is still functional because it is traffic within the mesh and the demo-app frontend is able to present a valid service identity in the form of a client ceritificate.  
 
 ![Base Diagram](../docs/06-security-authn1.png)
 
@@ -183,7 +183,13 @@ Additionally, we'll update the mesh configuration to expose an external endpoint
 envsubst < 06-app-security-s2s/05-mesh-config.yaml | tctl apply -f - 
 ```
 
-Out service is now available from anywhere, a browser or curl command, outside the cluster.
+Our service is now available from anywhere, a browser or curl command, outside the cluster.  Prior to invoking the service make sure DNS has propagated:
+
+```bash
+nslookup quotes.$PREFIX.workshop.cx.tetrate.info
+```
+
+Then test the service:
 
 ```bash
 curl -i https://quotes.$PREFIX.workshop.cx.tetrate.info/quotes/GOOG
