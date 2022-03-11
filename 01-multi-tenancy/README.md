@@ -26,13 +26,13 @@ metadata:
   description: ABZ Tetrate Workshop
   displayName: ABZ Tetrate Workshop
   name: abz-tetrate-workshop
-  organization: tetrate-workshop
+  organization: workshop
   resourceVersion: '"UHEEfLYLVws="'
 spec:
   description: ABZ Tetrate Workshop
   displayName: ABZ Tetrate Workshop
   etag: '"UHEEfLYLVws="'
-  fqn: organizations/tetrate-workshop/tenants/abz-tetrate-workshop
+  fqn: organizations/workshop/tenants/abz-tetrate-workshop
 ```
 
 2. You'll also note that there is a second API Object which configures some basic RBAC on the tenant.  Your workshop user has been configured to be an admin of this tenant.  In practice, this binding provides the opportunity to map an organizations user and groups to roles, groups, and mutli-tenancy objects within TSB.
@@ -45,14 +45,14 @@ apiVersion: rbac.tsb.tetrate.io/v2
 kind: TenantAccessBindings
 metadata:
   name: demo-workshop
-  organization: tetrate-workshop
+  organization: workshop
   tenant: demo-workshop
 spec:
   allow:
   - role: rbac/admin
     subjects:
     - user: admin
-    - team: organizations/tetrate-workshop/teams/91d830b6-83c8-41a4-abbf-3bf64ac5b8fd
+    - team: organizations/workshop/teams/91d830b6-83c8-41a4-abbf-3bf64ac5b8fd
 ```
 
 ## Create Workspaces
@@ -74,7 +74,7 @@ apiversion: api.tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
   name: workshop-app
 spec:
   description: Demo App
@@ -100,7 +100,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
   workspace: marketdata
   name: marketdata-gw
 spec:

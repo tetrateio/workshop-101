@@ -2,10 +2,10 @@
 apiVersion: config.agent.onboarding.tetrate.io/v1alpha1
 kind: OnboardingConfiguration
 onboardingEndpoint:
-  host: onboarding.cloud-a-01.workshop.cx.tetrate.info
+  host: onboarding.workshop.cx.tetrate.info
   transportSecurity:
     tls:
-      sni: onboarding.cloud-a-01.workshop.cx.tetrate.info
+      sni: onboarding.workshop.cx.tetrate.info
 workloadGroup:
   namespace: $PREFIX-quotes
   name: quotes

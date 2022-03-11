@@ -6,7 +6,7 @@ metadata:
   group: tier1-gw
   workspace: workshop-app
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
 spec:
   workloadSelector:
     namespace: $PREFIX-tier1
