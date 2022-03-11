@@ -86,7 +86,7 @@ kubectl --context cloud-a-01 -n $PREFIX-workshop-app logs $POD_NAME istio-proxy 
 
 While this is a great step forward, we still have an implicit trust that any service running within our workspace is authorized to invoke our market data service.  Imagine the scenario of a 3 tier application comprised of a web frontend, backend business logic, and a relational database.  We may not want the frontend to be able to communicate directly with the database.  It is a best practice to be as explicit as possible with respect to servce to service authorization.  
 
-Lets further restrict our workshop environment to ensure that *only* the ingress gateway can communicate with the quotes service within the Market Data workspace.  First, lets validate that any pod within the workspace, which is limited to the `$PREFIX-quotes` can still communicate with the service.  We'll once again test this using a helper curl pod:
+Lets further restrict our workshop environment to ensure that *only* the ingress gateway can communicate with the quotes service within the Market Data workspace.  First, lets validate that any pod within the workspace, which is limited to the `$PREFIX-quotes` namespace can still communicate with the service.  We'll once again test this using a helper curl pod:
 
 ```bash
 kubectl --context cloud-a-01 run $PREFIX-shell -n $PREFIX-quotes --rm -i --tty --image nicolaka/netshoot --env="PREFIX=$PREFIX" -- /bin/bash
@@ -171,7 +171,7 @@ X509v3 Subject Alternative Name: critical
 ...
 ```
 
-- Seeing that we now have out Market Data service completely locked down, except for the ingress gateway, we now need to expose our service externally via the gateway.  We'll update the IngressGateway with a setting for external DNS resolution in addition to a TLS Certificate.
+- Seeing that we now have our Market Data service completely locked down, except for the ingress gateway, we now need to expose our service externally via the gateway.  We'll update the IngressGateway with a setting for external DNS resolution in addition to a TLS Certificate.
 
 ```bash
 envsubst < 06-app-security-s2s/04-external-config.yaml | kubectl --context cloud-a-01 apply -f -   
