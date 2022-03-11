@@ -112,13 +112,13 @@ curl http://169.254.169.254/latest/meta-data/iam/info
 4. Next, we need to install the onboarding agent, which drives auto-registration, and the Envoy proxy on our jumpbox.  These can be downloaded from an endpoint exposed on the service mesh control plane.  Execute the following commands to download and install these components:
 
 ```bash
-wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm
-wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm.sha256
+wget https://onboarding.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm
+wget https://onboarding.workshop.cx.tetrate.info/install/rpm/amd64/istio-sidecar.rpm.sha256
 sha256sum --check istio-sidecar.rpm.sha256
 sudo yum -y install istio-sidecar.rpm
 
-wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm
-wget https://onboarding.cloud-a-01.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm.sha256
+wget https://onboarding.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm
+wget https://onboarding.workshop.cx.tetrate.info/install/rpm/amd64/onboarding-agent.rpm.sha256
 sha256sum --check onboarding-agent.rpm.sha256
 sudo yum -y install onboarding-agent.rpm
 ```
