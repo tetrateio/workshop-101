@@ -3,7 +3,7 @@ kind: WorkspaceSetting
 metadata:
   displayName: default-settings
   name: default-settings
-  organization: tetrate-workshop
+  organization: workshop
   tenant: $PREFIX-workshop
   workspace: workshop-app
 spec:

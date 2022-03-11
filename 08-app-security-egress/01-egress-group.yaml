@@ -3,7 +3,7 @@ apiversion: api.tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
   name: workshop-app
 spec:
   description: Demo App
@@ -18,7 +18,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: tetrate-workshop
+  organization: workshop
   workspace: workshop-app
   name: egress
 spec:
