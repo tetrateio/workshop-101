@@ -14,7 +14,9 @@ When you log in you may be asked to install a Multi-factor Auth app.  If so, sel
 ![Base Diagram](../docs/00-azure-skip.png)
 
 ## Accessing TSB Via TCTL CLI
-For a large part of the hands-on labs we will be interacting with TSB via API calls.  These are most easily invoked via the `tctl` CLI.  This has already been installed on the jumpbox.  Login using the following command, which will prompt you to authenticate with Azure AZ.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`.  Follow the prompts to confirm that you are logging in the applicatin `Tetrate-Workshop`.
+For a large part of the hands-on labs we will be interacting with TSB via API calls.  These are most easily invoked via the `tctl` CLI.  This has already been installed on the jumpbox.  You should have aldready been provided a SSH Keypair to use when connecting to the jumpbox.  Make sure the permissions are set correctly on the keypair -- `chmod 600 <PATH_TO_KEYPAIR>`.  SSH to the jumpbox: `ssh -i <PATH_TO_KEYPAIR> ec2-user@<JUMPHOST_IP>`
+
+Login using the following command, which will prompt you to authenticate with Azure AZ.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`.  Follow the prompts to confirm that you are logging in the applicatin `Tetrate-Workshop`.
 
 ```bash
 tctl config clusters set default --bridge-address $TSB_HOST
@@ -59,8 +61,10 @@ When executing the CLI commands, which typically accept YAML as an input, we wil
 ```bash
 echo "File without variable substitution:"
 cat 00-env-access/01-test.yaml
+
 echo "File WITH variable substitution:"
 envsubst < 00-env-access/01-test.yaml
+
 ```
 
 You should see an output similar to the following, except your prefix will be different:

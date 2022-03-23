@@ -52,7 +52,7 @@ spec:
   - role: rbac/admin
     subjects:
     - user: admin
-    - team: organizations/workshop/teams/91d830b6-83c8-41a4-abbf-3bf64ac5b8fd
+    - teuseram: organizations/workshop/users/91d830b6-83c8-41a4-abbf-3bf64ac5b8fd
 ```
 
 ## Create Workspaces
