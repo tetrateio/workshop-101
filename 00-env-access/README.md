@@ -61,8 +61,10 @@ When executing the CLI commands, which typically accept YAML as an input, we wil
 ```bash
 echo "File without variable substitution:"
 cat 00-env-access/01-test.yaml
+
 echo "File WITH variable substitution:"
 envsubst < 00-env-access/01-test.yaml
+
 ```
 
 You should see an output similar to the following, except your prefix will be different:
