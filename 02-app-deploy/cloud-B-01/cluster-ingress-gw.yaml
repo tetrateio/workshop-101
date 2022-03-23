@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: traffic
+  name: trafficgenerator
   labels:
     istio-injection: enabled
 ---
@@ -37,7 +37,7 @@ metadata:
   labels:
     app: $PREFIX-trafficgenerator
   name: $PREFIX-trafficgenerator
-  namespace: traffic
+  namespace: trafficgenerator
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
