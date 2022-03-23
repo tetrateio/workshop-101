@@ -24,19 +24,26 @@ spec:
   dnsNames:
     - demo-app.cloud-a-01.$PREFIX.workshop.cx.tetrate.info
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traffic
+  labels:
+    istio-injection: enabled
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: trafficgenerator
+    app: $PREFIX-trafficgenerator
   name: $PREFIX-trafficgenerator
-  namespace: default
+  namespace: traffic
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   selector:
     matchLabels:
-      app: trafficgenerator
+      app: $PREFIX-trafficgenerator
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -45,7 +52,7 @@ spec:
   template:
     metadata:
       labels:
-        app: trafficgenerator
+        app: $PREFIX-trafficgenerator
     spec:
       containers:
       - args:
