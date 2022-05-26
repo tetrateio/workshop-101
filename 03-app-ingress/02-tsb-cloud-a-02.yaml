@@ -6,7 +6,7 @@ metadata:
   group: frontend-gw-02
   workspace: workshop-app
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
 spec:
   workloadSelector:
     namespace: $PREFIX-workshop-app

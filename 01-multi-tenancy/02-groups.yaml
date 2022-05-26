@@ -3,7 +3,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: marketdata
   name: marketdata-gw
 spec:
@@ -18,7 +18,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: workshop-app
   name: tier1-gw
 spec:
@@ -33,7 +33,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: workshop-app
   name: frontend-gw-01
 spec:
@@ -48,7 +48,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: workshop-app
   name: frontend-gw-02
 spec:
@@ -63,7 +63,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: workshop-app
   name: frontend-gw-03
 spec:

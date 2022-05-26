@@ -33,7 +33,7 @@ metadata:
   group: frontend-gw-01
   workspace: workshop-app
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
 ...  
 ```
 

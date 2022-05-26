@@ -6,7 +6,7 @@ metadata:
   group: tier1-gw
   workspace: workshop-app
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
 spec:
   workloadSelector:
     namespace: $PREFIX-tier1

@@ -6,7 +6,7 @@ metadata:
   group: marketdata-gw
   workspace: marketdata
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
 spec:
   workloadSelector:
     namespace: $PREFIX-quotes

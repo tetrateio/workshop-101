@@ -26,7 +26,7 @@ metadata:
   description: ABZ Tetrate Workshop
   displayName: ABZ Tetrate Workshop
   name: abz-tetrate-workshop
-  organization: workshop
+  organization: visa
   resourceVersion: '"UHEEfLYLVws="'
 spec:
   description: ABZ Tetrate Workshop
@@ -45,7 +45,7 @@ apiVersion: rbac.tsb.tetrate.io/v2
 kind: TenantAccessBindings
 metadata:
   name: demo-workshop
-  organization: workshop
+  organization: visa
   tenant: demo-workshop
 spec:
   allow:
@@ -74,7 +74,7 @@ apiversion: api.tsb.tetrate.io/v2
 kind: Workspace
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   name: workshop-app
 spec:
   description: Demo App
@@ -100,7 +100,7 @@ apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
 metadata:
   tenant: $PREFIX-workshop
-  organization: workshop
+  organization: visa
   workspace: marketdata
   name: marketdata-gw
 spec:
