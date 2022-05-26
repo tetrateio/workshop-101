@@ -5,7 +5,7 @@ Throughout the labs contained within this workshop we will be interacting with t
 3. Kubernetes via kubectl
 
 ## Accessing TSB Via Web Browser
-TSB can be accessed in a browser at: [https://workshop.poc-tsb.azure.tetrate.com/admin/login](https://workshop.poc-tsb.azure.tetrate.com/admin/login)  You will utilize an Azure AD account that has been provisioned for you.  By selecting `Log In With OICD` you will be redirected to Azure to authenticate.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`
+TSB can be accessed in a browser at: [https://visa.poc-tsb.azure.tetrate.com/admin/login](https://visa.poc-tsb.azure.tetrate.com/admin/login)  You will utilize an Azure AD account that has been provisioned for you.  By selecting `Log In With OICD` you will be redirected to Azure to authenticate.  Utilize the username/password that has been provided to you.  It should be in the form of `<FIRST_INITIAL><LAST_NAME>@tetratepoc.onmicrosoft.com`
 
 ![Base Diagram](../docs/00-tsb-ui.png)
 
