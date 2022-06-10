@@ -64,7 +64,7 @@ curl http://169.254.169.254/latest/meta-data/public-ipv4
 
 Then setup the port-forwarding
 ```bash
-kubectl --context cloud-a-01 port-forward -n $PREFIX-workshop-app $(kubectl --context cloud-a-01 get po -n $PREFIX-workshop-app --output=jsonpath={.items..metadata.name} -l app=frontend)  --address 0.0.0.0 8080:8888 
+kubectl --context cloud-a-01 port-forward -n $PREFIX-workshop-app $(kubectl --context cloud-a-01 get po -n $PREFIX-workshop-app --output=jsonpath={.items..metadata.name} -l app=frontend)  --address 0.0.0.0 8080:8888
 ```
 
 Open your browser and navigate to `<JUMPHOST EXTERNAL IP>:8080`.  Enter `backend` in the Backend HTTP URL text box and submit the request.  This will cause the frontend microservice to call to the backend microservice over the service mesh and return the display the response via the frontend app.
